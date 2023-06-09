@@ -94,6 +94,7 @@ class Game {
             this.renderPlayerBoard();
             this.renderComputerBoard();
             document.getElementById("double_shot_btn").disabled = false;
+            document.getElementById("nuc_shot").disabled = false;
             return true
         }
         else{
@@ -232,7 +233,40 @@ class Game {
             this.renderPlayerBoard();
             this.renderComputerBoard();
             await delay(500);
-            if(this.playerDoubleShot == true){
+            if(this.playerNucShot == true){
+                this.playerNucShot = false;
+                this.isPlayerTurn = true;
+                document.getElementById("nuc_shot").disabled = true;
+                if(this.computerBoard.receiveAttack(row -1, col -1) == "hit"){
+                    this.computerBoard.grid[row-1][col-1] ="hit";
+                    if (--player_hits_to_win == 0) {
+                        this.handleGameOver(true);
+                    }
+                }
+                if(this.computerBoard.receiveAttack(row -1, col +1) == "hit"){
+                    this.computerBoard.grid[row-1][col+1] ="hit";
+                    if (--player_hits_to_win == 0) {
+                        this.handleGameOver(true);
+                    }
+                }
+                if(this.computerBoard.receiveAttack(row +1, col +1) == "hit"){
+                    this.computerBoard.grid[row+1][col+1] ="hit";
+                    if (--player_hits_to_win == 0) {
+                        this.handleGameOver(true);
+                    }
+                }
+                if(this.computerBoard.receiveAttack(row +1, col -1) == "hit"){
+                    this.computerBoard.grid[row+1][col-1] ="hit";
+                    if (--player_hits_to_win == 0) {
+                        this.handleGameOver(true);
+                    }
+                }
+                this.isPlayerTurn = false;
+
+                this.handleComputerTurn();
+
+            }
+            else if(this.playerDoubleShot == true){
                 this.playerDoubleShot = false;
                 document.getElementById("double_shot_btn").disabled = true;
                 this.isPlayerTurn = true;
@@ -329,6 +363,9 @@ class Game {
         document.getElementById("double_shot_btn").addEventListener("click", function() {
             game.playerDoubleShot = !game.playerDoubleShot;
         });
+        document.getElementById("nuc_shot").addEventListener("click", function() {
+            game.playerNucShot = !game.playerNucShot;
+        });
         game.start();
     }
 
@@ -347,6 +384,9 @@ document.getElementById("ship-placement-form").addEventListener("submit", functi
     if(game.start()){
         document.getElementById("double_shot_btn").addEventListener("click", function() {
             game.playerDoubleShot = !game.playerDoubleShot;
+        });
+        document.getElementById("nuc_shot").addEventListener("click", function() {
+            game.playerNucShot = !game.playerNucShot;
         });
         document.getElementById("ship-placement-form").style.display = "none";
         document.getElementById("restart_game").style.display = "block";
@@ -375,6 +415,9 @@ document.getElementById("random_player_ships").addEventListener("click", functio
     game.random_positions = true;
     document.getElementById("double_shot_btn").addEventListener("click", function() {
         game.playerDoubleShot = !game.playerDoubleShot;
+    });
+    document.getElementById("nuc_shot").addEventListener("click", function() {
+        game.playerNucShot = !game.playerNucShot;
     });
     game.start()
     document.getElementById("ship-placement-form").style.display = "none";

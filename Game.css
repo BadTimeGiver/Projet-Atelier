@@ -68,13 +68,17 @@ button[type="submit"]:hover {
 }
 
 #nuc_shot{
-    background-color: red;
     cursor: pointer;
     border-radius: 100%;
 }
 
+#nuc_shot img, #double_shot_btn img{
+
+    width: 70px;
+}
+
 #nuc_shot.active {
-    background-color: orange;
+    background-color: red;
     color: #fff;
 }
   
