@@ -51,7 +51,7 @@ class Board {
         }
         
         this.ships.push(ship);
-        return true; // Ship successfully added to the board
+        return true;
     }
   
     receiveAttack(row, col) {
@@ -74,22 +74,34 @@ class Game {
     this.computerBoard = new Board();
     this.isPlayerTurn = true;
     this.random_positions = true;
+    this.playerDoubleShot = false;
+    this.playerNucShot = false;
+    this.ComputerDoubleShot = false;
+    this.ComputerNucShot = false;
   }
 
-  start() {
-      this.playerBoard = new Board();
-    if(this.placePlayerShips()){
-        this.placeComputerShips();
-        this.renderPlayerBoard();
-        this.renderComputerBoard();
-        return true
+    start() {
+        
+        player_hits_to_win = 17;
+        computer_hits_to_win = 17;
+        this.playerBoard = new Board();
+        this.playerDoubleShot = false;
+        this.playerNucShot = false;
+        this.ComputerNucShot = false;
+        this.ComputerDoubleShot = false;
+        if(this.placePlayerShips()){
+            this.placeComputerShips();
+            this.renderPlayerBoard();
+            this.renderComputerBoard();
+            document.getElementById("double_shot_btn").disabled = false;
+            return true
+        }
+        else{
+            this.renderPlayerBoard();
+            alert("Incorrect Placement")
+            return false
+        }
     }
-    else{
-        this.renderPlayerBoard();
-        alert("Incorrect Placement")
-        return false
-    }
-  }
 
   placePlayerShips() {
     const ship1 = new Ship("Carrier", 5);
@@ -214,13 +226,23 @@ class Game {
 
     async handlePlayerTurn(row, col) {
         const result = this.computerBoard.receiveAttack(row, col);
-
+        
         if (result === "miss") {
             this.isPlayerTurn = false;
             this.renderPlayerBoard();
             this.renderComputerBoard();
             await delay(500);
-            this.handleComputerTurn();
+            if(this.playerDoubleShot == true){
+                this.playerDoubleShot = false;
+                document.getElementById("double_shot_btn").disabled = true;
+                this.isPlayerTurn = true;
+                this.handlePlayerTurn(row, col);
+                this.renderComputerBoard();
+
+            }else{
+
+                this.handleComputerTurn();
+            }
         } else if (result === "hit") {
             this.computerBoard.grid[row][col] ="hit"
             this.renderPlayerBoard();
@@ -231,7 +253,6 @@ class Game {
             } else {
                 this.handlePlayerTurn(row, col);
             }
-
         }
     }
 
@@ -270,11 +291,11 @@ class Game {
         } else {
             alert("Game over! You lose!");
         }
-        
-        player_hits_to_win = 17;
-        computer_hits_to_win = 17;
         const game = new Game();
         game.random_positions = true;
+        document.getElementById("double_shot_btn").addEventListener("click", function() {
+            game.playerDoubleShot = !game.playerDoubleShot;
+        });
         game.start();
     }
 
@@ -291,9 +312,13 @@ document.getElementById("ship-placement-form").addEventListener("submit", functi
     const game = new Game();
     game.random_positions = false;
     if(game.start()){
+        document.getElementById("double_shot_btn").addEventListener("click", function() {
+            game.playerDoubleShot = !game.playerDoubleShot;
+        });
         document.getElementById("ship-placement-form").style.display = "none";
         document.getElementById("restart_game").style.display = "block";
         document.getElementById("computer-board").style.display = "flex";
+        document.getElementById("power_btns").style.display = "block";
     }
     document.getElementById("player-board").style.display = "flex";
 });
@@ -302,6 +327,7 @@ document.getElementById("restart_game").addEventListener("click", function() {
     
     document.getElementById("player-board").style.display = "none";
     document.getElementById("computer-board").style.display = "none";
+    document.getElementById("power_btns").style.display = "none";
 
     
     document.getElementById("ship-placement-form").style.display = "block";
@@ -314,11 +340,23 @@ document.getElementById("random_player_ships").addEventListener("click", functio
     
     const game = new Game();
     game.random_positions = true;
-    if(game.start()){
-        document.getElementById("ship-placement-form").style.display = "none";
-        document.getElementById("restart_game").style.display = "block";
-        document.getElementById("computer-board").style.display = "flex";
-    }
+    document.getElementById("double_shot_btn").addEventListener("click", function() {
+        game.playerDoubleShot = !game.playerDoubleShot;
+    });
+    game.start()
+    document.getElementById("ship-placement-form").style.display = "none";
+    document.getElementById("restart_game").style.display = "block";
+    document.getElementById("computer-board").style.display = "flex";
+    document.getElementById("power_btns").style.display = "block";
     document.getElementById("player-board").style.display = "flex";
 
 });
+
+document.getElementById("double_shot_btn").addEventListener("click", function() {
+    document.getElementById("double_shot_btn").classList.toggle("active");
+});
+
+document.getElementById("nuc_shot").addEventListener("click", function() {
+    document.getElementById("nuc_shot").classList.toggle("active");
+});
+  

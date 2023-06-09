@@ -53,6 +53,33 @@ button[type="submit"]:hover {
     
 }
 
+#power_btns{
+    display: none;
+}
+
+#double_shot_btn{
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+#double_shot_btn.active {
+    background-color: red;
+    color: #fff;
+}
+
+#nuc_shot{
+    background-color: red;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+#nuc_shot.active {
+    background-color: orange;
+    color: #fff;
+}
+  
+
+
 #random_player_ships{
     display: block;
 }
