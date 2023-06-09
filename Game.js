@@ -87,8 +87,8 @@ class Game {
         this.playerBoard = new Board();
         this.playerDoubleShot = false;
         this.playerNucShot = false;
-        this.ComputerNucShot = false;
-        this.ComputerDoubleShot = false;
+        this.ComputerDoubleShot = true;
+        this.ComputerNucShot = true;
         if(this.placePlayerShips()){
             this.placeComputerShips();
             this.renderPlayerBoard();
@@ -264,7 +264,40 @@ class Game {
         const result = this.playerBoard.receiveAttack(randomRow, randomCol);
 
         if (result === "miss") {
-            this.isPlayerTurn = true;
+            if(this.ComputerNucShot == true && Math.random() < 0.1){
+                this.ComputerNucShot = false;
+                if(this.playerBoard.receiveAttack(randomRow -1, randomCol -1) == "hit"){
+                    this.playerBoard.grid[randomRow-1][randomCol-1] ="hit";
+                    if (--computer_hits_to_win == 0) {
+                        this.handleGameOver(false);
+                    }
+                }
+                if(this.playerBoard.receiveAttack(randomRow -1, randomCol +1) == "hit"){
+                    this.playerBoard.grid[randomRow-1][randomCol+1] ="hit";
+                    if (--computer_hits_to_win == 0) {
+                        this.handleGameOver(false);
+                    }
+                }
+                if(this.playerBoard.receiveAttack(randomRow +1, randomCol +1) == "hit"){
+                    this.playerBoard.grid[randomRow+1][randomCol+1] ="hit";
+                    if (--computer_hits_to_win == 0) {
+                        this.handleGameOver(false);
+                    }
+                }
+                if(this.playerBoard.receiveAttack(randomRow +1, randomCol -1) == "hit"){
+                    this.playerBoard.grid[randomRow+1][randomCol-1] ="hit";
+                    if (--computer_hits_to_win == 0) {
+                        this.handleGameOver(false);
+                    }
+                }
+                this.isPlayerTurn = true;
+
+            } else if(this.ComputerDoubleShot == true && Math.random() < 0.2){
+                this.ComputerDoubleShot = false;
+                this.handleComputerTurn();
+            }else{
+                this.isPlayerTurn = true;
+            }
             this.renderPlayerBoard();
             this.renderComputerBoard();
         } else if (result === "hit") {
