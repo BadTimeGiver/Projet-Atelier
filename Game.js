@@ -95,6 +95,8 @@ class Game {
             this.renderComputerBoard();
             document.getElementById("double_shot_btn").disabled = false;
             document.getElementById("nuc_shot").disabled = false;
+            document.getElementById("double_shot_btn").style.background = "none"
+
 
             return true
         }
