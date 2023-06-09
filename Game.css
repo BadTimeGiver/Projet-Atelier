@@ -41,7 +41,7 @@ button[type="submit"]:hover {
     background-color: #45a049;
 }
 
-#restart_game{
+#restart_game, #random_player_ships{
     background-color: rgb(211, 47, 47);
     border: none;
     display: none;
@@ -52,7 +52,12 @@ button[type="submit"]:hover {
     padding: 10px 20px;
     
 }
-#restart_game:hover{
+
+#random_player_ships{
+    display: block;
+}
+
+#restart_game:hover, #random_player_ships{
     background-color: red;
     
 }

@@ -73,6 +73,7 @@ class Game {
     this.playerBoard = new Board();
     this.computerBoard = new Board();
     this.isPlayerTurn = true;
+    this.random_positions = true;
   }
 
   start() {
@@ -96,37 +97,46 @@ class Game {
     const ship3 = new Ship("Destroyer", 3);
     const ship4 = new Ship("Submarine", 3);
     const ship5 = new Ship("Patrol Boat", 2);
-    const carrier_x = parseInt(document.getElementById("carrier-input-x").value);
-    const carrier_y = parseInt(document.getElementById("carrier-input-y").value);
-    const carrier_V = parseInt(document.getElementById("carrier-input-is-vertical").value);    
-    
-    const battleship_x = parseInt(document.getElementById("battleship-input-x").value);
-    const battleship_y = parseInt(document.getElementById("battleship-input-y").value);
-    const battleship_V = parseInt(document.getElementById("battleship-input-is-vertical").value);    
-    
-    const destroyer_x = parseInt(document.getElementById("destroyer-input-x").value);
-    const destroyer_y = parseInt(document.getElementById("destroyer-input-y").value);
-    const destroyer_V = parseInt(document.getElementById("destroyer-input-is-vertical").value);    
-    
-    const submarine_x = parseInt(document.getElementById("submarine-input-x").value);
-    const submarine_y = parseInt(document.getElementById("submarine-input-y").value);
-    const submarine_V = parseInt(document.getElementById("submarine-input-is-vertical").value);    
-    
-    const patrol_x = parseInt(document.getElementById("patrol-input-x").value);
-    const patrol_y = parseInt(document.getElementById("patrol-input-y").value);
-    const patrol_V = parseInt(document.getElementById("patrol-input-is-vertical").value);    
-    
-    
-    
-    
-    
-    
-    return (this.playerBoard.addShip(ship1, carrier_x, carrier_y, carrier_V) && 
+    if(this.random_positions == false){
+        const carrier_x = parseInt(document.getElementById("carrier-input-x").value);
+        const carrier_y = parseInt(document.getElementById("carrier-input-y").value);
+        const carrier_V = parseInt(document.getElementById("carrier-input-is-vertical").value);    
+        
+        const battleship_x = parseInt(document.getElementById("battleship-input-x").value);
+        const battleship_y = parseInt(document.getElementById("battleship-input-y").value);
+        const battleship_V = parseInt(document.getElementById("battleship-input-is-vertical").value);    
+        
+        const destroyer_x = parseInt(document.getElementById("destroyer-input-x").value);
+        const destroyer_y = parseInt(document.getElementById("destroyer-input-y").value);
+        const destroyer_V = parseInt(document.getElementById("destroyer-input-is-vertical").value);    
+        
+        const submarine_x = parseInt(document.getElementById("submarine-input-x").value);
+        const submarine_y = parseInt(document.getElementById("submarine-input-y").value);
+        const submarine_V = parseInt(document.getElementById("submarine-input-is-vertical").value);    
+        
+        const patrol_x = parseInt(document.getElementById("patrol-input-x").value);
+        const patrol_y = parseInt(document.getElementById("patrol-input-y").value);
+        const patrol_V = parseInt(document.getElementById("patrol-input-is-vertical").value);    
+        
+        
+        return (this.playerBoard.addShip(ship1, carrier_x, carrier_y, carrier_V) && 
         this.playerBoard.addShip(ship2, battleship_x, battleship_y,battleship_V)&&
         this.playerBoard.addShip(ship3, destroyer_x, destroyer_y, destroyer_V) &&
         this.playerBoard.addShip(ship4, submarine_x, submarine_y, submarine_V) &&
         this.playerBoard.addShip(ship5, patrol_x, patrol_y, patrol_V));
-  }
+    }else{
+        while(!this.playerBoard.addShip(ship1, Math.floor((Math.random() * 5)), Math.floor((Math.random() * 5)), Math.floor((Math.random() * 2))));
+
+        while(!this.playerBoard.addShip(ship2, Math.floor((Math.random() * 6)), Math.floor((Math.random() * 6)), Math.floor((Math.random() * 2))));
+
+        while(!this.playerBoard.addShip(ship3, Math.floor((Math.random() * 7)), Math.floor((Math.random() * 7)), Math.floor((Math.random() * 2))));
+
+        while(!this.playerBoard.addShip(ship4, Math.floor((Math.random() * 7)), Math.floor((Math.random() * 7)), Math.floor((Math.random() * 2))));
+        
+        while(!this.playerBoard.addShip(ship5, Math.floor((Math.random() * 8)), Math.floor((Math.random() * 8)), Math.floor((Math.random() * 2))));
+        return true;
+    }
+}
 
     placeComputerShips() {
         const ship1 = new Ship("Carrier", 5);
@@ -264,6 +274,7 @@ class Game {
         player_hits_to_win = 17;
         computer_hits_to_win = 17;
         const game = new Game();
+        game.random_positions = true;
         game.start();
     }
 
@@ -278,6 +289,7 @@ function delay(ms) {
 document.getElementById("ship-placement-form").addEventListener("submit", function(event) {
     event.preventDefault();
     const game = new Game();
+    game.random_positions = false;
     if(game.start()){
         document.getElementById("ship-placement-form").style.display = "none";
         document.getElementById("restart_game").style.display = "block";
@@ -294,5 +306,19 @@ document.getElementById("restart_game").addEventListener("click", function() {
     
     document.getElementById("ship-placement-form").style.display = "block";
     document.getElementById("restart_game").style.display = "none";
+
+});
+
+
+document.getElementById("random_player_ships").addEventListener("click", function() {
+    
+    const game = new Game();
+    game.random_positions = true;
+    if(game.start()){
+        document.getElementById("ship-placement-form").style.display = "none";
+        document.getElementById("restart_game").style.display = "block";
+        document.getElementById("computer-board").style.display = "flex";
+    }
+    document.getElementById("player-board").style.display = "flex";
 
 });
