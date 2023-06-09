@@ -95,6 +95,7 @@ class Game {
             this.renderComputerBoard();
             document.getElementById("double_shot_btn").disabled = false;
             document.getElementById("nuc_shot").disabled = false;
+
             return true
         }
         else{
@@ -237,6 +238,7 @@ class Game {
                 this.playerNucShot = false;
                 this.isPlayerTurn = true;
                 document.getElementById("nuc_shot").disabled = true;
+                document.getElementById("nuc_shot").style.background = "none"
                 if(this.computerBoard.receiveAttack(row -1, col -1) == "hit"){
                     this.computerBoard.grid[row-1][col-1] ="hit";
                     if (--player_hits_to_win == 0) {
@@ -269,6 +271,7 @@ class Game {
             else if(this.playerDoubleShot == true){
                 this.playerDoubleShot = false;
                 document.getElementById("double_shot_btn").disabled = true;
+                document.getElementById("double_shot_btn").style.background = "none"
                 this.isPlayerTurn = true;
                 this.handlePlayerTurn(row, col);
                 this.renderComputerBoard();
@@ -362,9 +365,19 @@ class Game {
         game.random_positions = true;
         document.getElementById("double_shot_btn").addEventListener("click", function() {
             game.playerDoubleShot = !game.playerDoubleShot;
+            if(game.playerDoubleShot){
+                document.getElementById("double_shot_btn").style.background = "red"
+            }else{
+                document.getElementById("double_shot_btn").style.background = "none"
+            }
         });
         document.getElementById("nuc_shot").addEventListener("click", function() {
             game.playerNucShot = !game.playerNucShot;
+            if(game.playerNucShot){
+                document.getElementById("nuc_shot").style.background = "red"
+            }else{
+                document.getElementById("nuc_shot").style.background = "none"
+            }
         });
         game.start();
     }
@@ -384,9 +397,19 @@ document.getElementById("ship-placement-form").addEventListener("submit", functi
     if(game.start()){
         document.getElementById("double_shot_btn").addEventListener("click", function() {
             game.playerDoubleShot = !game.playerDoubleShot;
+            if(game.playerDoubleShot){
+                document.getElementById("double_shot_btn").style.background = "red"
+            }else{
+                document.getElementById("double_shot_btn").style.background = "none"
+            }
         });
         document.getElementById("nuc_shot").addEventListener("click", function() {
             game.playerNucShot = !game.playerNucShot;
+            if(game.playerNucShot){
+                document.getElementById("nuc_shot").style.background = "red"
+            }else{
+                document.getElementById("nuc_shot").style.background = "none"
+            }
         });
         document.getElementById("ship-placement-form").style.display = "none";
         document.getElementById("restart_game").style.display = "block";
@@ -415,9 +438,19 @@ document.getElementById("random_player_ships").addEventListener("click", functio
     game.random_positions = true;
     document.getElementById("double_shot_btn").addEventListener("click", function() {
         game.playerDoubleShot = !game.playerDoubleShot;
+        if(game.playerDoubleShot){
+            document.getElementById("double_shot_btn").style.background = "red"
+        }else{
+            document.getElementById("double_shot_btn").style.background = "none"
+        }
     });
     document.getElementById("nuc_shot").addEventListener("click", function() {
         game.playerNucShot = !game.playerNucShot;
+        if(game.playerNucShot){
+            document.getElementById("nuc_shot").style.background = "red"
+        }else{
+            document.getElementById("nuc_shot").style.background = "none"
+        }
     });
     game.start()
     document.getElementById("ship-placement-form").style.display = "none";
@@ -427,12 +460,3 @@ document.getElementById("random_player_ships").addEventListener("click", functio
     document.getElementById("player-board").style.display = "flex";
 
 });
-
-document.getElementById("double_shot_btn").addEventListener("click", function() {
-    document.getElementById("double_shot_btn").classList.toggle("active");
-});
-
-document.getElementById("nuc_shot").addEventListener("click", function() {
-    document.getElementById("nuc_shot").classList.toggle("active");
-});
-  
