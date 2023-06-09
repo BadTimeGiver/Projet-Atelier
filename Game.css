@@ -1,0 +1,85 @@
+body {
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+#boards{
+    display: flex;
+    justify-content: space-around;
+}
+
+#player-board, #computer-board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 420px;
+}
+
+
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="number"] {
+    width: 100px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#restart_game{
+    background-color: rgb(211, 47, 47);
+    border: none;
+    display: none;
+    color: white;
+    margin: auto;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    
+}
+#restart_game:hover{
+    background-color: red;
+    
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    margin: 1px;
+    box-sizing: border-box;
+}
+
+.cell:hover{
+    background-color: rgba(255, 166, 0, 0.414);
+}
+
+.empty {
+    background-color: cyan;
+}
+.ship {
+    background-color: #000;
+}
+.miss {
+    background-color: #ccc;
+}
+
+.hit {
+    background-color: #f00;
+}

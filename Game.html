@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Battleship Game</title>
+    <link rel="stylesheet" href="Game.css">
+</head>
+<body>
+    <h1>Battleship Game</h1>
+    <div id="boards">
+        <div>
+            <h2>Your Board</h2>
+            <div id="player-board"></div>
+        </div>
+        <form id="ship-placement-form">
+            <label for="carrier-input">Carrier (5 cells):</label>
+            <br>
+            <input placeholder="↑↓" type="number" id="carrier-input-x" min="0" max="9" required><br>
+            <input placeholder="←→" type="number" id="carrier-input-y" min="0" max="9" required><br>
+            <input placeholder="0: H; 1: V" type="number" id="carrier-input-is-vertical" min="0" max="1" required><br>
+    
+            <label for="battleship-input">Battleship (4 cells):</label>
+            <br>
+            <input placeholder="↑↓" type="number" id="battleship-input-x" min="0" max="9" required><br>
+            <input placeholder="←→" type="number" id="battleship-input-y" min="0" max="9" required><br>
+            <input placeholder="0: H; 1: V" type="number" id="battleship-input-is-vertical" min="0" max="1" required><br>
+    
+            <label for="destroyer-input">Destroyer (3 cells):</label>
+            <br>
+            <input placeholder="↑↓" type="number" id="destroyer-input-x" min="0" max="9" required><br>
+            <input placeholder="←→" type="number" id="destroyer-input-y" min="0" max="9" required><br>
+            <input placeholder="0: H; 1: V" type="number" id="destroyer-input-is-vertical" min="0" max="1" required><br>
+    
+            <label for="submarine-input">Submarine (3 cells):</label>
+            <br>
+            <input placeholder="↑↓" type="number" id="submarine-input-x" min="0" max="9" required><br>
+            <input placeholder="←→" type="number" id="submarine-input-y" min="0" max="9" required><br>
+            <input placeholder="0: H; 1: V" type="number" id="submarine-input-is-vertical" min="0" max="1" required><br>
+    
+            <label for="patrol-boat-input">Patrol Boat (2 cells):</label>
+            <br>
+            <input placeholder="↑↓" type="number" id="patrol-input-x" min="0" max="9" required><br>
+            <input placeholder="←→" type="number" id="patrol-input-y" min="0" max="9" required><br>
+            <input placeholder="0: H; 1: V" type="number" id="patrol-input-is-vertical" min="0" max="1" required><br>
+    
+            <button type="submit">Start Game</button>
+        </form>
+        <div>
+            <h2>Computer Board</h2>
+            <div id="computer-board"></div>
+        </div>
+
+    </div>
+    <button type="button" id="restart_game">Restart Game</button>
+    <script src="Game.js"></script>
+</body>
+</html>
