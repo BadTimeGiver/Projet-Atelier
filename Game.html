@@ -6,41 +6,73 @@
 </head>
 <body>
     <h1>Battleship Game</h1>
+
     <div id="boards">
         <div>
             <h2>Your Board</h2>
             <div id="player-board"></div>
         </div>
         <form id="ship-placement-form">
+            <h2>The Board is a 10 by 10 table</h2>
             <label for="carrier-input">Carrier (5 cells):</label>
             <br>
-            <input placeholder="↑↓" type="number" id="carrier-input-x" min="0" max="9" required><br>
-            <input placeholder="←→" type="number" id="carrier-input-y" min="0" max="9" required><br>
-            <input placeholder="0: H; 1: V" type="number" id="carrier-input-is-vertical" min="0" max="1" required><br>
+            <label>Vertical Position: </label>
+            <input placeholder="↑↓" type="number" id="carrier-input-x" min="0" max="9" required>
+            <label>Horizontal Position: </label>
+            <input placeholder="←→" type="number" id="carrier-input-y" min="0" max="9" required>
+            <label>Orientation</label>
+            <select placeholder="0: H; 1: V" type="number" id="carrier-input-is-vertical" required>
+                <option value=0>Horizontal</option>
+                <option value=1>Vertical</option>
+            </select><br>
     
             <label for="battleship-input">Battleship (4 cells):</label>
             <br>
-            <input placeholder="↑↓" type="number" id="battleship-input-x" min="0" max="9" required><br>
-            <input placeholder="←→" type="number" id="battleship-input-y" min="0" max="9" required><br>
-            <input placeholder="0: H; 1: V" type="number" id="battleship-input-is-vertical" min="0" max="1" required><br>
+            <label>Vertical Position: </label>
+            <input placeholder="↑↓" type="number" id="battleship-input-x" min="0" max="9" required>
+            <label>Horizontal Position: </label>
+            <input placeholder="←→" type="number" id="battleship-input-y" min="0" max="9" required>
+            <label>Orientation</label>
+            <select placeholder="0: H; 1: V" type="number" id="battleship-input-is-vertical" min="0" max="1" required>
+                <option value=0>Horizontal</option>
+                <option value=1>Vertical</option>
+            </select><br>
     
             <label for="destroyer-input">Destroyer (3 cells):</label>
             <br>
-            <input placeholder="↑↓" type="number" id="destroyer-input-x" min="0" max="9" required><br>
-            <input placeholder="←→" type="number" id="destroyer-input-y" min="0" max="9" required><br>
-            <input placeholder="0: H; 1: V" type="number" id="destroyer-input-is-vertical" min="0" max="1" required><br>
+            <label>Vertical Position: </label>
+            <input placeholder="↑↓" type="number" id="destroyer-input-x" min="0" max="9" required>
+            <label>Horizontal Position: </label>
+            <input placeholder="←→" type="number" id="destroyer-input-y" min="0" max="9" required>
+            <label>Orientation</label>
+            <select placeholder="0: H; 1: V" type="number" id="destroyer-input-is-vertical" min="0" max="1" required>
+                <option value=0>Horizontal</option>
+                <option value=1>Vertical</option>
+            </select><br>
     
             <label for="submarine-input">Submarine (3 cells):</label>
             <br>
-            <input placeholder="↑↓" type="number" id="submarine-input-x" min="0" max="9" required><br>
-            <input placeholder="←→" type="number" id="submarine-input-y" min="0" max="9" required><br>
-            <input placeholder="0: H; 1: V" type="number" id="submarine-input-is-vertical" min="0" max="1" required><br>
+            <label>Vertical Position: </label>
+            <input placeholder="↑↓" type="number" id="submarine-input-x" min="0" max="9" required>
+            <label>Horizontal Position: </label>
+            <input placeholder="←→" type="number" id="submarine-input-y" min="0" max="9" required>
+            <label>Orientation</label>
+            <select placeholder="0: H; 1: V" type="number" id="submarine-input-is-vertical" min="0" max="1" required>
+                <option value=0>Horizontal</option>
+                <option value=1>Vertical</option>
+            </select><br>
     
             <label for="patrol-boat-input">Patrol Boat (2 cells):</label>
             <br>
-            <input placeholder="↑↓" type="number" id="patrol-input-x" min="0" max="9" required><br>
-            <input placeholder="←→" type="number" id="patrol-input-y" min="0" max="9" required><br>
-            <input placeholder="0: H; 1: V" type="number" id="patrol-input-is-vertical" min="0" max="1" required><br>
+            <label>Vertical Position: </label>
+            <input placeholder="↑↓" type="number" id="patrol-input-x" min="0" max="9" required>
+            <label>Horizontal Position: </label>
+            <input placeholder="←→" type="number" id="patrol-input-y" min="0" max="9" required>
+            <label>Orientation</label>
+            <select placeholder="0: H; 1: V" type="number" id="patrol-input-is-vertical" min="0" max="1" required>
+                <option value=0>Horizontal</option>
+                <option value=1>Vertical</option>
+            </select><br>
     
             <button type="submit">Start Game</button>
             <br>
