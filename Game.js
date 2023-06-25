@@ -361,13 +361,13 @@ class Game {
         }
         else{
             if(this.row_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit+1][this.col_hit] instanceof Object)
-                this.aimComputerShot(this.row_hit+1,this.col_hit);
+                await this.aimComputerShot(this.row_hit + 1, this.col_hit);
             else if(this.row_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit-1][this.col_hit] instanceof Object)
-                this.aimComputerShot(this.row_hit-1,this.col_hit);
+                await this.aimComputerShot(this.row_hit - 1, this.col_hit);
             else if(this.col_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit][this.col_hit-1] instanceof Object)
-                this.aimComputerShot(this.row_hit,this.col_hit-1);
+                await this.aimComputerShot(this.row_hit, this.col_hit - 1);
             else if(this.col_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit][this.col_hit+1] instanceof Object)
-                this.aimComputerShot(this.row_hit,this.col_hit+1);
+                await this.aimComputerShot(this.row_hit, this.col_hit + 1);
             else{
                 this.col_hit = -1;
                 this.row_hit = -1;
