@@ -297,7 +297,21 @@ class Game {
             }
         }
     }
+    async aimComputerShot(row_hit,col_hit){
+        this.playerBoard.receiveAttack(row_hit, col_hit);
+        this.playerBoard.grid[row_hit][col_hit] = "hit"
+        this.renderPlayerBoard();
+        this.renderComputerBoard();
 
+        row_hit += 1;
+
+        if (--computer_hits_to_win === 0) {
+            this.handleGameOver(false);
+        } else {
+            await delay(500);
+            await this.handleComputerTurn();
+        }
+    }
 
     async handleComputerTurn() {
         if(this.row_hit === -1 && this.col_hit === -1){
@@ -346,66 +360,14 @@ class Game {
             await delay(500);
         }
         else{
-            if(this.row_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit+1][this.col_hit] instanceof Object){
-                this.playerBoard.receiveAttack(this.row_hit+1, this.col_hit);
-                this.playerBoard.grid[this.row_hit+1][this.col_hit] = "hit"
-                this.renderPlayerBoard();
-                this.renderComputerBoard();
-                
-                this.row_hit += 1;
-                
-                if (--computer_hits_to_win === 0) {
-                    this.handleGameOver(false);
-                } else {
-                    await delay(500);
-                    await this.handleComputerTurn();
-                }
-            }
-            else if(this.row_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit-1][this.col_hit] instanceof Object){
-                this.playerBoard.receiveAttack(this.row_hit-1, this.col_hit);
-                this.playerBoard.grid[this.row_hit-1][this.col_hit] = "hit"
-                this.renderPlayerBoard();
-                this.renderComputerBoard();
-                
-                this.row_hit -= 1;
-                
-                if (--computer_hits_to_win === 0) {
-                    this.handleGameOver(false);
-                } else {
-                    await delay(500);
-                    await this.handleComputerTurn();
-                }
-            }
-            else if(this.col_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit][this.col_hit-1] instanceof Object){
-                this.playerBoard.receiveAttack(this.row_hit, this.col_hit-1);
-                this.playerBoard.grid[this.row_hit][this.col_hit-1] = "hit"
-                this.renderPlayerBoard();
-                this.renderComputerBoard();
-                
-                this.col_hit -= 1;
-                
-                if (--computer_hits_to_win === 0) {
-                    this.handleGameOver(false);
-                } else {
-                    await delay(500);
-                    await this.handleComputerTurn();
-                }
-            }
-            else if(this.col_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit][this.col_hit+1] instanceof Object){
-                this.playerBoard.receiveAttack(this.row_hit, this.col_hit+1);
-                this.playerBoard.grid[this.row_hit][this.col_hit+1] = "hit"
-                this.renderPlayerBoard();
-                this.renderComputerBoard();
-                
-                this.col_hit +=1;
-                
-                if (--computer_hits_to_win === 0) {
-                    this.handleGameOver(false);
-                } else {
-                    await delay(500);
-                    await this.handleComputerTurn();
-                }
-            }
+            if(this.row_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit+1][this.col_hit] instanceof Object)
+                this.aimComputerShot(this.row_hit+1,this.col_hit);
+            else if(this.row_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit-1][this.col_hit] instanceof Object)
+                this.aimComputerShot(this.row_hit-1,this.col_hit);
+            else if(this.col_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit][this.col_hit-1] instanceof Object)
+                this.aimComputerShot(this.row_hit,this.col_hit-1);
+            else if(this.col_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit][this.col_hit+1] instanceof Object)
+                this.aimComputerShot(this.row_hit,this.col_hit+1);
             else{
                 this.col_hit = -1;
                 this.row_hit = -1;
