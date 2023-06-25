@@ -299,7 +299,7 @@ class Game {
 
 
     async handleComputerTurn() {
-        if(this.row_hit == -1 && this.col_hit == -1){
+        if(this.row_hit === -1 && this.col_hit === -1){
             
             
             const randomRow = Math.floor(Math.random() * ROWS);
