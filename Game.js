@@ -3,6 +3,7 @@ const ROWS = 10;
 const COLS = 10;
 let player_hits_to_win = 17;
 let computer_hits_to_win = 17;
+first_time_load = true;
 
 // Define Ship class
 class Ship {
@@ -427,7 +428,10 @@ class Game {
     init_Game(){
         GAME = new Game();
         GAME.random_positions = true;
-        GAME.specialShots()
+        if(first_time_load === true){
+            GAME.specialShots();
+            first_time_load = false;
+        }
         GAME.start()
     }
     specialShots(){
