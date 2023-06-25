@@ -78,6 +78,9 @@ class Game {
         this.playerNucShot = false;
         this.ComputerDoubleShot = false;
         this.ComputerNucShot = false;
+
+        this.row_hit = -1;
+        this.col_hit = -1;
     }
 
     start() {
@@ -284,6 +287,7 @@ class Game {
             }
         }
     }
+
     confirmShotComputer(randomRow,randomCol){
         if (this.playerBoard.receiveAttack(randomRow, randomCol) === "hit") {
             this.playerBoard.grid[randomRow][randomCol] = "hit";
@@ -292,48 +296,125 @@ class Game {
             }
         }
     }
+
+
     async handleComputerTurn() {
-        const randomRow = Math.floor(Math.random() * ROWS);
-        const randomCol = Math.floor(Math.random() * COLS);
-
-
-        const result = this.playerBoard.receiveAttack(randomRow, randomCol);
-
-        if (result === "miss") {
-            if (this.ComputerNucShot === true && Math.random() < 1 && randomCol>0 && randomCol<9 && randomRow>0 && randomRow<0) {
-                this.ComputerNucShot = false;
-                this.confirmShotComputer(randomRow-1,randomCol-1);
-                this.confirmShotComputer(randomRow-1,randomCol+1);
-                this.confirmShotComputer(randomRow+1,randomCol+1);
-                this.confirmShotComputer(randomRow+1,randomCol-1);
-                this.isPlayerTurn = true;
-
-            } else if (this.ComputerDoubleShot === true && Math.random() < 0.2) {
-                this.ComputerDoubleShot = false;
+        if(this.row_hit == -1 && this.col_hit == -1){
+            
+            
+            const randomRow = Math.floor(Math.random() * ROWS);
+            const randomCol = Math.floor(Math.random() * COLS);
+            
+            const result = this.playerBoard.receiveAttack(randomRow, randomCol);
+            
+            if (result === "miss") {
+                if (this.ComputerNucShot === true && Math.random() < 0.1 && randomCol>0 && randomCol<9 && randomRow>0 && randomRow<9) {
+                    this.ComputerNucShot = false;
+                    this.confirmShotComputer(randomRow-1,randomCol-1);
+                    this.confirmShotComputer(randomRow-1,randomCol+1);
+                    this.confirmShotComputer(randomRow+1,randomCol+1);
+                    this.confirmShotComputer(randomRow+1,randomCol-1);
+                    this.isPlayerTurn = true;
+                    
+                } else if (this.ComputerDoubleShot === true && Math.random() < 0.2) {
+                    this.ComputerDoubleShot = false;
+                    await this.handleComputerTurn();
+                } else {
+                    this.isPlayerTurn = true;
+                }
+                this.renderPlayerBoard();
+                this.renderComputerBoard();
+            } else if (result === "hit") {
+                this.playerBoard.grid[randomRow][randomCol] = "hit"
+                this.renderPlayerBoard();
+                this.renderComputerBoard();
+                
+                this.row_hit = randomRow;
+                this.col_hit = randomCol;
+                
+                if (--computer_hits_to_win === 0) {
+                    this.handleGameOver(false);
+                } else {
+                    await delay(500);
+                    await this.handleComputerTurn();
+                }
+            } else {
                 await this.handleComputerTurn();
-            } else {
-                this.isPlayerTurn = true;
             }
-            this.renderPlayerBoard();
-            this.renderComputerBoard();
-        } else if (result === "hit") {
-            this.playerBoard.grid[randomRow][randomCol] = "hit"
-            this.renderPlayerBoard();
-            this.renderComputerBoard();
-            if (--computer_hits_to_win === 0) {
-                this.handleGameOver(false);
-            } else {
+            
+            await delay(500);
+        }
+        else{
+            if(this.row_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit+1][this.col_hit] instanceof Object){
+                this.playerBoard.receiveAttack(this.row_hit+1, this.col_hit);
+                this.playerBoard.grid[this.row_hit+1][this.col_hit] = "hit"
+                this.renderPlayerBoard();
+                this.renderComputerBoard();
+                
+                this.row_hit += 1;
+                
+                if (--computer_hits_to_win === 0) {
+                    this.handleGameOver(false);
+                } else {
+                    await delay(500);
+                    await this.handleComputerTurn();
+                }
+            }
+            else if(this.row_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit-1][this.col_hit] instanceof Object){
+                this.playerBoard.receiveAttack(this.row_hit-1, this.col_hit);
+                this.playerBoard.grid[this.row_hit-1][this.col_hit] = "hit"
+                this.renderPlayerBoard();
+                this.renderComputerBoard();
+                
+                this.row_hit -= 1;
+                
+                if (--computer_hits_to_win === 0) {
+                    this.handleGameOver(false);
+                } else {
+                    await delay(500);
+                    await this.handleComputerTurn();
+                }
+            }
+            else if(this.col_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit][this.col_hit-1] instanceof Object){
+                this.playerBoard.receiveAttack(this.row_hit, this.col_hit-1);
+                this.playerBoard.grid[this.row_hit][this.col_hit-1] = "hit"
+                this.renderPlayerBoard();
+                this.renderComputerBoard();
+                
+                this.col_hit -= 1;
+                
+                if (--computer_hits_to_win === 0) {
+                    this.handleGameOver(false);
+                } else {
+                    await delay(500);
+                    await this.handleComputerTurn();
+                }
+            }
+            else if(this.col_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit][this.col_hit+1] instanceof Object){
+                this.playerBoard.receiveAttack(this.row_hit, this.col_hit+1);
+                this.playerBoard.grid[this.row_hit][this.col_hit+1] = "hit"
+                this.renderPlayerBoard();
+                this.renderComputerBoard();
+                
+                this.col_hit +=1;
+                
+                if (--computer_hits_to_win === 0) {
+                    this.handleGameOver(false);
+                } else {
+                    await delay(500);
+                    await this.handleComputerTurn();
+                }
+            }
+            else{
+                this.col_hit = -1;
+                this.row_hit = -1;
                 await delay(500);
                 await this.handleComputerTurn();
             }
-        } else {
-            await this.handleComputerTurn();
         }
-
-        await delay(500);
     }
-
-    handleGameOver(playerWins) {
+        
+        handleGameOver(playerWins) {
         if (playerWins) {
             alert("Congratulations! You win!");
 
