@@ -100,6 +100,7 @@ class Game {
             document.getElementById("double_shot_btn").disabled = false;
             document.getElementById("nuc_shot").disabled = false;
             document.getElementById("double_shot_btn").style.background = "none"
+            document.getElementById("nuc_shot").style.background = "none"
 
 
             return true
@@ -303,8 +304,7 @@ class Game {
         this.renderPlayerBoard();
         this.renderComputerBoard();
 
-        row_hit += 1;
-
+        alert();
         if (--computer_hits_to_win === 0) {
             this.handleGameOver(false);
         } else {
@@ -360,15 +360,17 @@ class Game {
             await delay(500);
         }
         else{
-            if(this.row_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit+1][this.col_hit] instanceof Object)
-                await this.aimComputerShot(this.row_hit + 1, this.col_hit);
-            else if(this.row_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit-1][this.col_hit] instanceof Object)
-                await this.aimComputerShot(this.row_hit - 1, this.col_hit);
-            else if(this.col_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit][this.col_hit-1] instanceof Object)
-                await this.aimComputerShot(this.row_hit, this.col_hit - 1);
-            else if(this.col_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit][this.col_hit+1] instanceof Object)
-                await this.aimComputerShot(this.row_hit, this.col_hit + 1);
-            else{
+            if(this.row_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit+1][this.col_hit] instanceof Object){
+                await this.aimComputerShot(++this.row_hit, this.col_hit);
+                this.row_hit += 1;
+            }else if(this.row_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit-1][this.col_hit] instanceof Object){
+                await this.aimComputerShot(--this.row_hit, this.col_hit);
+                this.row_hit -= 1;
+            }else if(this.col_hit - 1 >= 0 && this.playerBoard.grid[this.row_hit][this.col_hit-1] instanceof Object){
+                await this.aimComputerShot(this.row_hit, --this.col_hit);
+            }else if(this.col_hit + 1 <= 9 && this.playerBoard.grid[this.row_hit][this.col_hit+1] instanceof Object){
+                await this.aimComputerShot(this.row_hit, ++this.col_hit);
+            }else{
                 this.col_hit = -1;
                 this.row_hit = -1;
                 await delay(500);
